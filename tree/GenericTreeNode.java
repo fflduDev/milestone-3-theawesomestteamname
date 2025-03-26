@@ -15,6 +15,7 @@ public class GenericTreeNode<E> {
 	}
 	
 	public void removeChild(E theItem) {
+		//if target item has chilren, transfer then into parent node
 		if (children.get(children.indexOf(theItem)).children.size() == 0) {
 			children.get(children.indexOf(theItem)).children.forEach(e -> addChild(e));
 		}

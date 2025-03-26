@@ -15,6 +15,10 @@ public class GenericTreeNode<E> {
 	}
 	
 	public void removeChild(E theItem) {
+		if (children.get(children.indexOf(theItem)).children.size() == 0) {
+			children.get(children.indexOf(theItem)).children.forEach(e -> addChild(e));
+		}
+		children.remove(theItem);
 		// this one is a little harder.
 		// what do you do when the item has children?
 		// I suggest "give them to the parent"

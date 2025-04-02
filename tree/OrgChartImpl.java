@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.function.Consumer;
 
 public class OrgChartImpl implements OrgChart{
 
@@ -18,15 +17,23 @@ public class OrgChartImpl implements OrgChart{
 		if (root == null) {
 			
 			root = new GenericTreeNode<Employee>(e);
+
 			nodes.add(root);
-			
+
+		} else {
+
+			root.data = e;
+
 		}
 
 	}
 	
 	public void clear() {
 		// get rid of the org chart
+
 		nodes.clear();
+
+		root = null;
 
 
 	}
@@ -34,7 +41,6 @@ public class OrgChartImpl implements OrgChart{
 	public void addDirectReport(Employee manager, Employee newPerson) {
 		// add the newPerson as a direct report (child) of manager
 		GenericTreeNode<Employee> managerNode = findEmployee(manager);
-		GenericTreeNode<Employee> newNode = findEmployee(newPerson);
 
 		if (managerNode == null) {
 
@@ -42,21 +48,19 @@ public class OrgChartImpl implements OrgChart{
 
 		}
 
-		if (newNode == null) {
-
-			newNode = new GenericTreeNode<Employee>(newPerson);
-
-		}
-
-		managerNode.addChild(managerNode);
+		managerNode.addChild(new GenericTreeNode<Employee>(newPerson));
 
 	}
 	
 	public void removeEmployee(Employee firedPerson) {
 		// remove the employee, give their direct reports to their supervisor
-		//GenericTreeNode<
+		GenericTreeNode<Employee> supervisor = findSupervisor(firedPerson);
 
+		if (supervisor != null) {
 
+			supervisor.removeChild(firedPerson);
+
+		}
 
 	}
 	
@@ -86,19 +90,32 @@ public class OrgChartImpl implements OrgChart{
 		
 	}
 	
-	public GenericTreeNode<Employee> findSupervisor(Employee employee) {
+	private GenericTreeNode<Employee> findSupervisor(Employee employee) {
 
-
-	}
-
-	public GenericTreeNode<Employee> findEmployee(Employee employee) {
-		
 		for (GenericTreeNode<Employee> node : nodes) {
-			if (node.data.equals(employee)) return node;
+
+			for (GenericTreeNode<Employee> child : node.children) {
+
+				if (child.data.equals(employee)) return node;
+
+			}
+
 		}
+		
 		return null;
 
 	}
-	
+
+	private GenericTreeNode<Employee> findEmployee(Employee employee) {
+
+		for (GenericTreeNode<Employee> node : nodes) {
+
+			if (node.data.equals(employee)) return node;
+
+		}
+
+		return null;
+
+	}
 	
 }

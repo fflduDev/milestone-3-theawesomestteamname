@@ -8,6 +8,7 @@ public class GenericTreeNode<E> {
 	
 	public GenericTreeNode(E theItem) {
 		data = theItem;
+		children = new ArrayList<>();
 	}
 	
 	public void addChild(GenericTreeNode<E> theItem) {
@@ -15,11 +16,19 @@ public class GenericTreeNode<E> {
 	}
 	
 	public void removeChild(E theItem) {
-		//if target item has chilren, transfer then into parent node
-		if (children.get(children.indexOf(theItem)).children.size() == 0) {
-			children.get(children.indexOf(theItem)).children.forEach(e -> addChild(e));
+
+		int index = children.indexOf(theItem);
+
+		if (index != -1) {
+
+			children.addAll(children.get(index).children);
+
+			children.remove(index);
+
 		}
-		children.remove(theItem);
+
+		//if target item has chilren, transfer then into parent node
+		
 		// this one is a little harder.
 		// what do you do when the item has children?
 		// I suggest "give them to the parent"

@@ -48,7 +48,9 @@ public class OrgChartImpl implements OrgChart{
 
 		}
 
-		managerNode.addChild(new GenericTreeNode<Employee>(newPerson));
+		nodes.add(new GenericTreeNode<Employee>(newPerson));
+
+		managerNode.addChild(nodes.getLast());
 
 	}
 	
@@ -69,8 +71,8 @@ public class OrgChartImpl implements OrgChart{
 	}
 	
 	public void showOrgChartDepthFirstRecursive(GenericTreeNode<Employee> e) {
-		if (e.children.isEmpty() == false) e.children.forEach(i -> showOrgChartDepthFirstRecursive(i));
 		System.out.println(e.data.getName());
+		if (e.children.isEmpty() == false) e.children.forEach(i -> showOrgChartDepthFirstRecursive(i));
 	}
 	
 	public void showOrgChartBreadthFirst() {

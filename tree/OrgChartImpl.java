@@ -1,7 +1,9 @@
 package tree;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.function.Consumer;
 
 public class OrgChartImpl implements OrgChart{
@@ -52,35 +54,49 @@ public class OrgChartImpl implements OrgChart{
 	
 	public void removeEmployee(Employee firedPerson) {
 		// remove the employee, give their direct reports to their supervisor
-		GenericTreeNode<
+		//GenericTreeNode<
 
 
 
 	}
 	
 	public void showOrgChartDepthFirst() {
-
-
-
-
+		showOrgChartDepthFirstRecursive(root);
+	}
+	
+	public void showOrgChartDepthFirstRecursive(GenericTreeNode<Employee> e) {
+		if (e.children.isEmpty() == false) e.children.forEach(i -> showOrgChartDepthFirstRecursive(i));
+		System.out.println(e.data.getName());
 	}
 	
 	public void showOrgChartBreadthFirst() {
-
-
-
+		Queue<GenericTreeNode<Employee>> stack = new LinkedList<>();
+		
+		stack.add(root);
+		GenericTreeNode<Employee> cur;
+		
+		while (!stack.isEmpty()) {
+			cur = stack.remove();
+			System.out.println(cur.data.getName());
+			
+			if (cur.children.isEmpty() == false) {
+				cur.children.forEach(i -> stack.add(i));
+			}
+		}
 		
 	}
 	
 	public GenericTreeNode<Employee> findSupervisor(Employee employee) {
 
 
-
 	}
 
 	public GenericTreeNode<Employee> findEmployee(Employee employee) {
-
 		
+		for (GenericTreeNode<Employee> node : nodes) {
+			if (node.data.equals(employee)) return node;
+		}
+		return null;
 
 	}
 	

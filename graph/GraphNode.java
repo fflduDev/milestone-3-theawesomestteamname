@@ -59,7 +59,10 @@ public class GraphNode {
 
 	public void printNeighbors() {
 
-
+		System.out.println(value + " has paths to:");
+		paths.forEach((node, weight) -> 
+			System.out.println("Node: " + node.value + " Weight: " + weight));
+		System.out.println();
 
 	}
 	

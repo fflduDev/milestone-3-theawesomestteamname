@@ -47,13 +47,45 @@ public class DiGraphImpl implements DiGraph{
 	public Boolean nodeIsReachable(GraphNode fromNode, GraphNode toNode) {return null;}
 	public Boolean hasCycles() {return null;}
 	
-	public List<GraphNode> getNodes() {return null;}
-	public GraphNode getNode(String nodeValue) {return null;}
-	
-	public int fewestHops(GraphNode fromNode, GraphNode toNode) {return 0;}
-	public int shortestPath(GraphNode fromNode, GraphNode toNode) {return 0;}
 
-	public void addEdgeStr(String a, String b, int c) {}
+	public List<GraphNode> getNodes() {
+
+		return nodeList;
+
+	}
+
+	public GraphNode getNode(String nodeValue) {
+		
+		for (GraphNode node : nodeList) {
+
+			if (node.getValue().equals(nodeValue)) return node;
+
+		}
+
+		return null;
+	
+	}
+
+	
+	public int fewestHops(GraphNode fromNode, GraphNode toNode) {
+
+		return getFewestHopsPath(fromNode, toNode).size() - 1;
+
+	}
+
+	public int shortestPath(GraphNode fromNode, GraphNode toNode) {
+		
+		return getShortestPath(fromNode, toNode).size() - 1;
+	
+	}
+
+	public void addEdgeStr(String a, String b, int c) {
+
+		GraphNode aNode = getNode(a); GraphNode bNode = getNode(b);
+		if (aNode != null && bNode != null) aNode.addNeighbor(bNode, c);
+
+	}
+
 	public List<GraphNode> getFewestHopsPath(GraphNode fromNode, GraphNode toNode) {return null;}
 	public List<GraphNode> getShortestPath(GraphNode fromNode, GraphNode toNode) {return null;}
 	

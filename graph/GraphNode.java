@@ -65,5 +65,12 @@ public class GraphNode {
 		System.out.println();
 
 	}
+
+	public boolean equals(Object o) {
+
+		if (o.getClass() != this.getClass()) return false;
+		return value.equals(((GraphNode) o).value);
+
+	}
 	
 }

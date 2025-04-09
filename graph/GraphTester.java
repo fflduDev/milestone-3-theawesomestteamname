@@ -70,6 +70,7 @@ public class GraphTester {
 		//test shortest path
 		System.out.println("Shortest from G to B is: " + graph.shortestPath(new GraphNode("G"), new GraphNode("B"))); 
 		printPath(graph.getShortestPath(new GraphNode("G"), new GraphNode("B")));
+
 	}
 	
 }

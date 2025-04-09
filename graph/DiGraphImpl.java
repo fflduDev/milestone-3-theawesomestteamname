@@ -3,6 +3,7 @@ package graph;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +80,31 @@ public class DiGraphImpl implements DiGraph{
 
 	public List<GraphNode> getAdjacentNodes(GraphNode node) {return null;}
 	public Boolean nodesAreAdjacent(GraphNode fromNode, GraphNode toNode) {return null;}
-	public Boolean nodeIsReachable(GraphNode fromNode, GraphNode toNode) {return null;}
+	public Boolean nodeIsReachable(GraphNode fromNode, GraphNode toNode) {
+		
+		GraphNode start = getNode(fromNode.getValue());
+		GraphNode goal = getNode(fromNode.getValue());
+		
+		Queue<GraphNode> checkQueue = new LinkedList<>();
+		HashSet<GraphNode> checkedNodes = new HashSet<>();
+		
+		checkQueue.add(start);
+		start.getNeighbors().forEach(g -> checkQueue.add(g));
+		
+		GraphNode cur;
+		while (!checkQueue.isEmpty()) {
+			cur = checkQueue.remove();
+			if (cur.getNeighbors().contains(goal)) {
+				return true;
+			} else {
+				if (!cur.getNeighbors().isEmpty() && !checkedNodes.contains(cur)) {
+					cur.getNeighbors().forEach(g -> checkQueue.add(g));
+				}
+			}
+			checkedNodes.add(cur);
+		}
+		return false;
+	}
 	public Boolean hasCycles() {return null;}
 	
 

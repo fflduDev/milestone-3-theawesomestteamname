@@ -79,8 +79,27 @@ public class DiGraphImpl implements DiGraph{
 	public Boolean setEdgeValue(GraphNode fromNode, GraphNode toNode, Integer newWeight) {return null;}
 	public Integer getEdgeValue(GraphNode fromNode, GraphNode toNode) {return null;}
 
-	public List<GraphNode> getAdjacentNodes(GraphNode node) {return null;}
-	public Boolean nodesAreAdjacent(GraphNode fromNode, GraphNode toNode) {return null;}
+	public List<GraphNode> getAdjacentNodes(GraphNode node) {
+		GraphNode host = getNode(node.getValue());
+		
+		if (host != null) {
+			return host.getNeighbors();
+		}else {
+			return null;
+		}
+	}
+	public Boolean nodesAreAdjacent(GraphNode fromNode, GraphNode toNode) {
+		
+		GraphNode start = getNode(fromNode.getValue());
+		GraphNode goal = getNode(toNode.getValue());
+		
+		if (start != null && goal != null) {
+			if (start.getNeighbors().contains(goal)) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public Boolean nodeIsReachable(GraphNode fromNode, GraphNode toNode) {
 		
 		GraphNode start = getNode(fromNode.getValue());
@@ -106,7 +125,18 @@ public class DiGraphImpl implements DiGraph{
 		}
 		return false;
 	}
-	public Boolean hasCycles() {return null;}
+	public Boolean hasCycles() {
+		
+		if (nodeList.isEmpty()) {
+			return false;
+		}
+		
+		for (GraphNode g : nodeList) {
+			if (nodeIsReachable(g, g)) return true;
+		}
+		return false;
+		
+	}
 	
 
 	public List<GraphNode> getNodes() {
